@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TimeTable</title>
+    <link rel="stylesheet" href="/timetable.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+            crossorigin="anonymous"></script>
+    <script th:inline="javascript">
+        function enrollCourse(memberId, courseId) {
+            $.ajax({
+                type: 'POST',
+                url: '/courses/enroll',
+                contentType: 'application/json',
+                data: JSON.stringify({ memberId: memberId, courseId: courseId }),
+                success: function (response) {
+                    alert('Course successfully enrolled!');
+                    location.reload(); // 페이지 새로고침
+                },
+                error: function (error) {
+                    alert('Error enrolling course: ' + error.responseText);
+                }
+            });
+        }
+    </script>
+    <script th:inline="javascript">
+        function deleteEnrollment(memberId, courseId) {
+            $.ajax({
+                type: 'DELETE', // DELETE 메서드 사용
+                url: '/courses/delete', // 서버의 엔드포인트
+                contentType: 'application/json',
+                data: JSON.stringify({ memberId: memberId, courseId: courseId }),
+                success: function (response) {
+                    alert('Enrollment successfully deleted!');
+                    location.reload(); // 페이지 새로고침
+                },
+                error: function (error) {
+                    alert('Error deleting enrollment: ' + error.responseText);
+                }
+            });
+        }
+    </script>
+
+</head>
+<body>
+<div class = "inner-box">
+<button onclick="returnMain()" class="button">메인화면</button>
+
+<!-- 학생의 시간표 -->
+
+<div th:if="${error}">
+    <p th:text="${error}"></p>
+</div>
+
+<h2>학생 시간표</h2>
+<div class="table-box">
+<table th:if="${courses}">
+    <thead>
+    <tr>
+        <th>수업이름</th>
+        <th>강의 위치</th>
+        <th>시작 시간</th>
+        <th>종료 시간</th>
+        <th>학과</th>
+        <th>수업 등록</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course : ${courses}">
+        <td th:text="${course.courseName}"></td>
+        <td th:text="${course.courseLocation}"></td>
+        <td th:text="${course.startTime}"></td>
+        <td th:text="${course.endTime}"></td>
+        <td th:text="${course.department}"></td>
+        <td>
+            <button th:attr="onclick='deleteEnrollment(' + ${member.id} + ', ' + ${course.id} + ')'">
+                삭제
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<!-- 전체 수업 목록 -->
+<h2>전체 수업 목록</h2>
+<div class="table-box">
+<table th:if="${allCourses}">
+    <thead>
+    <tr>
+        <th>수업이름</th>
+        <th>강의 위치</th>
+        <th>시작 시간</th>
+        <th>종료 시간</th>
+        <th>학과</th>
+        <th>수업 삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course : ${allCourses}">
+        <td th:text="${course.courseName}"></td>
+        <td th:text="${course.courseLocation}"></td>
+        <td th:text="${course.startTime}"></td>
+        <td th:text="${course.endTime}"></td>
+        <td th:text="${course.department}"></td>
+        <td>
+            <button th:attr="onclick='enrollCourse(' + ${member.id} + ', ' + ${course.id} + ')'">
+                등록
+            </button>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+<script>
+    const returnMain = () => {
+        location.href = "/main";
+    }
+</script>
+</html>

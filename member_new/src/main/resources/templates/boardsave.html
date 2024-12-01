@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>save</title>
+    <link rel="stylesheet" href="/boardsave.css">
+</head>
+<body>
+<div class="inner-box">
+    <div class ="form-container">
+<form action="/board/save" method="post" enctype="multipart/form-data">
+    작성자 <input type="text" name="boardWriter"> <br>
+    제목 <input type="text" name="boardTitle"> <br>
+    내용 <textarea name="boardContents" cols="30" rows="10"></textarea> <br>
+    파일첨부 <input type="file" name="boardFile"> <br>
+    <input type="submit" value="글작성" class ="button">
+</form>
+    <p th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red;"></p>
+<button onclick="returnPage()" class ="button">취소</button>
+    </div>
+</div>
+</body>
+<script>
+
+    const returnPage = () => {
+        location.href = "/board/paging"
+    }
+</script>
+</html>

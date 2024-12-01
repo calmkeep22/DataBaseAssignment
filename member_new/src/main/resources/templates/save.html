@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>save</title>
+    <!-- jquery cdn -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<!-- action속성: form에 작성한 데이터를 어디로 보낼지 지정 -->
+<div class = "inner-box">
+    <form action="/member/save" method="post" class="form-container">
+        <label for="memberEmail">이메일</label>
+        <input type="text" name="memberEmail" id="memberEmail">
+
+        <label for="memberPassword">비밀번호</label>
+        <input type="password" name="memberPassword" id="memberPassword">
+
+        <label for="memberName">이름</label>
+        <input type="text" name="memberName" id="memberName">
+
+        <label for="memberDepartment">학과</label>
+        <input type="text" name="memberDepartment" id="memberDepartment">
+
+        <input type="submit" value="회원가입" class="submit-btn">
+    </form>
+    <div style="color: red;">
+        <p th:text="${errorMessage}"></p> <!-- 타임리프 사용 시 에러 메시지 출력 -->
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

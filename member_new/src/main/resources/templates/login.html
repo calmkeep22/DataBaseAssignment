@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class = "inner-box">
+<form action="/member/login" method="post" class="form-container">
+    <label for="memberEmail">이메일</label>
+    <input type="text" name="memberEmail" id="memberEmail">
+    <label for="memberPassword">비밀번호</label>
+    <input type="password" name="memberPassword" id="memberPassword">
+  <input type="submit" value="로그인" class = "submit-btn">
+</form>
+    <div style="color: red;">
+        <p th:text="${errorMessage}"></p> <!-- 타임리프를 사용할 경우 -->
+    </div>
+</div>
+</body>
+</html>
